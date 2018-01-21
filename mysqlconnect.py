@@ -3,8 +3,10 @@ import mysql.connector
 cnx = None
 
 def connect():
-    cnx = mysql.connector.connect(user='root', password='{(ajl:s)}df:<:<vlsd|l',
-                                  host='dawndb.ciledregqogy.us-east-2.rds.amazonaws.com',
+    with open('.env', 'r') as f:
+        con_info = f.readlines()
+    cnx = mysql.connector.connect(user=con_info[0], password=con_info[1],
+                                  host=con_info[2],
                                   database='foodpool')
     return cnx
 def close():
