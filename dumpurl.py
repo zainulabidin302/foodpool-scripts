@@ -30,6 +30,7 @@ def main():
             directory = a
         else:
             assert False, "unhandled option"
+    urls = None
 
     if filename is not None:
         # if filename list is found, then process all urls
@@ -48,16 +49,16 @@ def main():
     
     if directory is None:
         directory = './'
-    print(urls)
-    for u in urls:
     
+    for u in urls:
+        
         headers = {'user-agent': 'my-app/0.0.1'}
         r = requests.get(u, headers=headers)
         file = os.path.join(directory, get_name(u))
+        
         with open(file, 'w') as f:
             f.write(str(r.content))
-    
-    print(','.join([x for x in urls]))
+        print(file)
     
 
 if __name__ == "__main__":
