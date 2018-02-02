@@ -5,6 +5,7 @@ import requests
 import getopt, sys
 import os
 import mysqlconnect
+import urllib 
 
 def main():
     # try:
@@ -47,24 +48,28 @@ def main():
     # print(len(r.content), ' Bytes written at ', file)
         
         
-    con = mysqlconnect.connect()
-    cursor = con.cursor()
-    query = 'INSERT INTO `intermediate_restaurants_urls` ( `foodpanda_url`) VALUES (%s)'
-    base_url = 'http://foodpanda.pk/city/lahore'
+    #con = mysqlconnect.connect()
+    #cursor = con.cursor()
+    #query = 'INSERT INTO `intermediate_restaurants_urls` ( `foodpanda_url`) VALUES (%s)'
+    #base_url = 'http://foodpanda.pk/city/lahore'
 
-    with open(os.path.join('foodpool/html', 'https___www_foodpanda_pk_city_lahore'), 'r') as f:
+    with open(os.path.join('foodpool/restaurant_html_pages', 'https___foodpanda_pk_chain_cb0kl_nando-s'), 'r') as f:
         content = f.read()
         html = BeautifulSoup(content, 'html.parser')
-        vendors = html.select('.vendor-list li a')
         
-        vendors = map(lambda x: x['href'], vendors)
+        params = urllib.parse.urlparse(html.select('img.map')[0]['src']).query.split('&')
+        for param in params:
+            if param.split('=')[0] == 'center':
+                lat, lon = param.split('=')[1].split(",")
+                print(lat, lon)
+                break
         
-        for vendor in vendors:
-            cursor.execute(query, (vendor,))
+        #for vendor in vendors:
+            #cursor.execute(query, (vendor,))
     
-        con.commit()
-    cursor.close()
-    con.close()
+        #con.commit()
+    #cursor.close()
+    #con.close()
 
 
 
