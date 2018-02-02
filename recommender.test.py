@@ -22,7 +22,7 @@ words = list(itertools.chain.from_iterable(words))
 all_words = nltk.FreqDist(word.lower() for word in words)
 
 print('extracting words!')
-word_features = list(all_words)[:1000]
+word_features = [i for i, j in all_words.most_common()][:100]
 #print(word_features)
 
 def review_features(review): 
@@ -54,7 +54,9 @@ print(review_features(['worst'])['contains(worst)'])
 import pickle
 with open('recommender-review-classifier.pickle', 'rb') as f:
     classifier = pickle.load(f)
-    print(classifier.classify(review_features(['worst pathetic lot'])))
+    print(classifier.classify(review_features(word_tokenize('amazing'))))
+    print(classifier.classify(review_features(word_tokenize('worst experience ever '))))
+    print(classifier.classify(review_features(word_tokenize('food was not as good as i expected'))))
 
 cursor.close()
 mysqlconnect.close(cnx)

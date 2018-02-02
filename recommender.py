@@ -25,7 +25,7 @@ words = list(itertools.chain.from_iterable(words))
 all_words = nltk.FreqDist(word.lower() for word in words)
 
 print('extracting words!')
-word_features = list(set(all_words))[:]
+word_features = [i for i, j in all_words.most_common()][:100]
 print(len(word_features))
 
 
@@ -34,7 +34,7 @@ def review_features(review):
     features = {}
     for word in word_features:
         features['contains({})'.format(word)] = (word in review_words)
-    print('review', review)
+#    print('review', review)
     return features
 
 
