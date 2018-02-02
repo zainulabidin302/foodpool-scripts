@@ -3,3 +3,5 @@ html
 .env
 __pycache__
 *.pyc
+apiv1/node_modules
+apiv1/pacakge-json.lock

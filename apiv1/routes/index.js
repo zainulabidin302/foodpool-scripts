@@ -10,6 +10,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+
 router.post('/query', function(req, res, next) {
     if (!req.body.query) {
         return res.json({error: 'query not found'})
