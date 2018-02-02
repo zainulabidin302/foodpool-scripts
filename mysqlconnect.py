@@ -3,7 +3,7 @@ import mysql.connector
 cnx = None
 
 def connect():
-    with open('.env', 'r') as f:
+    with open('foodpool/env', 'r') as f:
         con_info = f.readlines()
     
     con_info = [a.replace('\n', '') for a in con_info]
@@ -12,7 +12,8 @@ def connect():
                                   host=con_info[2],
                                   database='foodpool')
     return cnx
-def close():
-    cnx.close()
+    
+def close(con):
+    con.close()
 
 
