@@ -4,11 +4,35 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session')
+var MySQLStore = require('connect-mysql')(session);
+
+var options = {
+  config: {
+    user: 'root', 
+    password: '000000', 
+    database: 'foodpool' 
+  }
+};
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+
+// session setup
+
+app.use(session({
+  secret: 'v;kqwp4j}',
+  resave: false,
+  store: new MySQLStore(options),
+  saveUninitialized: true,
+}))
+
+
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,8 +46,41 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+
+app.use(function(req, res, next) {
+  console.log('req.path', req.path, req.sessionID)
+  if (req.session.logged_in && req.session.logged_in == true) {
+    next()  
+  } else if (req.path == '/users/auth') {
+    next()
+  } else {
+    if (req.method.toLowerCase() == 'get') {
+      res.render('unauth')
+    } else {
+      return res.json({
+        error: 'unauthorized'
+      })
+    }
+  }
+})
+
+
+
+
 app.use('/', index);
 app.use('/users', users);
+// cors
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -42,5 +99,15 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+
+
+
+
+
+
+
+
 
 module.exports = app;

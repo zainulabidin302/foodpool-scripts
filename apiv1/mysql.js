@@ -1,12 +1,11 @@
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-  host     : 'dawndb.ciledregqogy.us-east-2.rds.amazonaws.com',
+  host     : 'localhost',
   user     : 'root',
-  password : '{(ajl:s)}df:<:<vlsd|l',
+  password : '000000',
   database : 'foodpool'
 });
-
 
 
 

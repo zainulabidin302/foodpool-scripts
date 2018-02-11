@@ -51,15 +51,17 @@ def main():
         directory = './'
     
     for u in urls:
-        
-        headers = {'user-agent': 'my-app/0.0.1'}
-        r = requests.get(u, headers=headers)
-        file = os.path.join(directory, get_name(u))
-        
-        with open(file, 'w') as f:
-            f.write(str(r.content))
-        print(file)
-    
+        try:
+                
+            headers = {'user-agent': 'my-app/0.0.1'}
+            r = requests.get(u, headers=headers, timeout=10)
+            file = os.path.join(directory, get_name(u))
+            
+            with open(file, 'w') as f:
+                f.write(str(r.content))
+            print(file)
+        except Exception as e:
+            print(u, e)
 
 if __name__ == "__main__":
     main()
