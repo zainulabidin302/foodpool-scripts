@@ -4,7 +4,7 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : '000000',
-  database : 'foodpool'
+  database : 'fp_new'
 });
 
 

@@ -8,8 +8,9 @@ var md5 = require('md5')
 router.post('/auth', function(req, res, next) {
   
   if (req.session.logged_in && req.session.logged_in == true) {
-    res.json(req.session.user);
+    return res.json(req.session.user);
   } else {
+
     var err_msg = 'invalid username or password';
     if (!req.body.username || !req.body.password) {
       return res.json({
@@ -20,6 +21,7 @@ router.post('/auth', function(req, res, next) {
     var params = [req.body.username, req.body.username, req.body.username, md5(req.body.password)]
     
     var handler = (err, result, fields) => {
+      console.log(err)
       if (err || result.length < 1) return res.json({error: err_msg, e: err})
       req.session.user = result[0]
       req.session.logged_in = true

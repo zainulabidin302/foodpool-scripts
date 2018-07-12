@@ -1,0 +1,20 @@
+**************************** SYSTEM STATS ****************************
+******************************* TOTALS *******************************
+TOTAL USERS 5648
+-----> TOTAL USER RESTAURANT LIKES 20053
+-----> ALL USERS WHO LIKED A RESTAURANT 935
+-----> TOP 10 USERS WHO LIKED A RESTAURANT (BY COUNTS OF LIKES) [(111,), (107,), (105,), (104,), (103,), (102,), (101,), (100,), (98,), (96,)]
+-----> AVERAGE LIKES PER USER (ONLY USERS WHO LIKED SOMETHING) [(Decimal('21.4471'),)]
+
+PRODUCTS 20262
+-----> VARIATIONS 28897
+-----> VARIATION TOPPINGS 11726
+-----> VARIATION TOPPING OPTIONS 50728
+-----> TOTAL PRODUCT LIKES BY USERS 1600
+-----> TOP 10 PRODUCTS LIKED BY USERS (BY COUNTING LIKES) [(3,), (3,), (3,), (2,), (2,), (2,), (2,), (2,), (2,), (2,)]
+-----> TOP 10 USERS WHO LIKED PRODUCTS (BY COUNTING LIKES) [(4,), (4,), (3,), (3,), (3,), (3,), (3,), (3,), (3,), (3,)]
+
+RESTAURANTS 309
+-----> RESTAURANTS CATEGORIES 47
+-----> TOP 10 RESTAURANTS LIKED BY USERS (BY COUNTING LIKES) [(266,), (132,), (132,), (126,), (123,), (120,), (119,), (118,), (88,), (84,)]
+-----> AVERAGE LIKES PER PER RESTAURANT [(Decimal('66.6213'),)]

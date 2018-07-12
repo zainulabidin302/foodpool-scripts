@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        /* Set the size of the div element that contains the map */
+
+        #map {
+            height: 400px;
+            /* The height is 400 pixels */
+            width: 100%;
+            /* The width is the width of the web page */
+        }
+    </style>
+</head>
+
+<body>
+    <h3>My Google Maps Demo</h3>
+    <!--The div element for the map -->
+    <div id="map"></div>
+    <script>
+        // Initialize and add the map
+        // 1 deg is around 110 km
+        // 0.1 deg is around 110/10 i.e 10 km
+        // 0.1 is around 10 km radius (approx)
+        function getNearby(n, loc, min=-0.1, max=0.1) {
+            var locations = []
+            var { lat, lng } = loc;
+            var epsilon = 0.0;
+            for (var i = 0; i < n; i++) {
+                epsilon = Math.random() * (max - min) + min;
+                lat += epsilon;
+                
+                epsilon = Math.random() * (max - min) + min;
+                lng += epsilon;
+
+                locations.push(
+                    {lat, lng}
+                );
+            }
+            return locations;
+        }
+
+        function initMap() {
+            // The location of Uluru
+            // basic lahore location
+            //  31.5204° N, 74.3587°
+            
+
+            var locations = [{
+                lat: 31.538009, 
+                lng: 74.328593,
+                label: 'Shadman'
+            },{
+                lat: 31.501749,
+                lng: 74.361698,
+                label: 'Cavlary Ground'
+            }, {
+                lat: 31.474221,
+                lng: 74.376440,
+                label: 'DHA Phase 4'
+            }];
+            var LAHORE_CENTRE = locations[0];
+
+
+
+
+            // The map, centered at Uluru
+            var map = new google.maps.Map(
+                document.getElementById('map'), {
+                    zoom: 12,
+                    center: LAHORE_CENTRE
+                });
+
+
+            var _locations = locations.map( (loc) => {
+                return getNearby(10, loc);
+            });
+            _locations = _locations.reduce((acc, val) => acc.concat(val), [])
+            
+            for (var i = 0; i < _locations.length; i++) {
+                var marker = new google.maps.Marker({
+                    position: _locations[i],
+                    map: map
+                });
+             }
+
+
+
+
+        }
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVLlGrjeuCe2XjcT2q25wcLhDXfHSFY7k&callback=initMap">
+    </script>
+</body>
+
+</html>
