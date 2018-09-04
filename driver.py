@@ -1,7 +1,7 @@
 import argparse
 from statistics import stats
 from data_gen import user_generator, user_restaurant_likes_generator, user_product_likes_generator, user_locations_generator
-
+from knn_recommender.predict import predict
 
 def main():
     parser = argparse.ArgumentParser(description='A driver program for misc foodpool script.')
@@ -16,13 +16,20 @@ def main():
     parser.add_argument('-url', '--user-restaurant-likes', type=int , help="[N] [this options is used with -g]")
     parser.add_argument('-upl', '--user-product-likes', type=int , help="[N] [this options is used with -g]")
     parser.add_argument('-ul', '--user-locations', type=int , help="[N] [this options is used with -g]")
+    parser.add_argument('-pknn', '--predict-knn', type=int , help="[id]")
+    parser.add_argument('-n', '--predict-knn-n', type=int , help="[id]")
 
     args = parser.parse_args()
 
     if args.stats:
         stats.stats()
-
-    if args.generator:
+    elif args.predict_knn:
+        print('predicting nearest match using knn ...')
+        if args.predict_knn_n:
+            predict(args.predict_knn, n=args.predict_knn_n)
+        else:
+            predict(args.predict_knn)
+    elif args.generator:
         if args.users:
             print('generating users ...')
             user_generator.generate(args.users)
