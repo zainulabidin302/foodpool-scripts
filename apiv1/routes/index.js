@@ -1,3 +1,4 @@
+
 var debug = require('debug')('apiv1:server');
 var express = require('express');
 var router = express.Router();
@@ -66,6 +67,7 @@ router.get('/feed/:radius?/:lat?/:lon?', function (req, res, next) {
 });
 
 router.post('/query', function (req, res, next) {
+    console.log(req.body.query)
     if (!req.body.query) {
         return res.json({error: 'query not found'})
     }
@@ -76,5 +78,61 @@ router.post('/query', function (req, res, next) {
         }
         return res.json({'result': result, fields: fields});
     });
+});
+
+router.post('/products', function (req, res, next) {
+    var query = `select products.* , product_categories.title category, product_variations.price variation_price , product_variations.name variation_name from products 
+	left join product_categories on product_categories.id = products.category_id 
+    left join product_variations  on product_variations.product_id = products.id
+    where products.restaurant_id = ?`
+
+
+    Sql.query(query, [req.body.restaurant_id], (err, result, fields) => {
+        if (err) return res.json(err);
+        let categories = {};
+
+        result.forEach(item => {
+            item.qty = 0;
+            item.customise = ''
+            // item.open = false;
+            if(categories[item.category]){
+                if(categories[item.category][item.id]){
+                    categories[item.category][item.id].item.push(item)
+                }
+                else{
+                    categories[item.category][item.id] = {open: false, item: []}
+                    categories[item.category][item.id].item.push(item)
+                }
+            }
+            else{
+                categories[item.category] = { open: false }
+
+                if (categories[item.category][item.id]) {
+                    categories[item.category][item.id].item.push(item)
+                }
+                else {
+                    categories[item.category][item.id] = { open: false, item: [] }
+                    categories[item.category][item.id].item.push(item)
+                }
+            }
+        })
+
+        
+
+        return res.json(categories);
+        
+    })
+
+    // console.log(req.body.query)
+    // if (!req.body.query) {
+    //     return res.json({ error: 'query not found' })
+    // }
+
+    // Sql.query(req.body.query, (er, result, fields) => {
+    //     if (er) {
+    //         return res.json({ error: er, 'result': result, fields: fields })
+    //     }
+    //     return res.json({ 'result': result, fields: fields });
+    // });
 });
 module.exports = router;
