@@ -62,7 +62,3 @@ def predict(id, n=10):
 
     distances, indices = nbrs.kneighbors(user_fit)
     print(indices)
-
-
-
-predict(12, 2)

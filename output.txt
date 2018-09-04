@@ -1,0 +1,13 @@
+predicting nearest match using knn ...
+3
+        id         name                lat ...  rating label  rid
+1365  1018  Ahmed Ahmed  31.52334718701876 ...     nan  None  nan
+
+[1 rows x 8 columns]
+      id  name   lat   lon  comment  rating  label  rid
+1320   3  3332  4066  4066      514       2      3  204
+        id                               name  lat ...  rating label  rid
+1320  1000  Muhammad Usman T Muhammad Usman T  nan ...     3.0  None  4.0
+
+[1 rows x 8 columns]
+[[1320 1451 1820 2123 1692 2124 1532 1697 1698 1398]]

@@ -7,7 +7,7 @@ import itertools
 
 cnx = mysqlconnect.connect()
 cursor = cnx.cursor()
-query = ("SELECT comment, label FROM `restaurant_comments_labled_as_rating` ")
+query = ("SELECT comment, label FROM `restaurant_comments` ")
 cursor.execute(query);
 
 reviews = []
@@ -54,9 +54,17 @@ print(review_features(['worst'])['contains(worst)'])
 import pickle
 with open('recommender-review-classifier.pickle', 'rb') as f:
     classifier = pickle.load(f)
-    print(classifier.classify(review_features(word_tokenize('amazing'))))
-    print(classifier.classify(review_features(word_tokenize('worst experience ever '))))
-    print(classifier.classify(review_features(word_tokenize('food was not as good as i expected'))))
+    comment = 'amazing ambiance'
+
+    print(comment, classifier.classify(review_features(word_tokenize(comment))))
+
+    comment = 'good food, bad location'
+    print(comment, classifier.classify(review_features(word_tokenize(comment))))
+
+    #print(classifier.classify(review_features(word_tokenize('Not the best food in the world.'))))
+    # print(classifier.classify(review_features(word_tokenize('Highly recommended.'))))
+    # print(classifier.classify(review_features(word_tokenize('bura taste.'))))
+    # print(classifier.classify(review_features(word_tokenize('Bilkul mat jayega farigh tareen taste.'))))
+
 
 cursor.close()
-mysqlconnect.close(cnx)

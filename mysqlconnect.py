@@ -2,14 +2,10 @@
 import mysql.connector
 
 def connect(env = 'env'):
-    with open(env, 'r') as f:
-        con_info = f.readlines()
     
-    con_info = [a.replace('\n', '') for a in con_info]
-    
-    cnx = mysql.connector.connect(user=con_info[0], password=con_info[1],
-                                  host=con_info[2],
-                                  database=con_info[3])
+    cnx = mysql.connector.connect(user='root', password='',
+                                  host='localhost',
+                                  database='fp_new')
     return cnx
 
 class Connector:

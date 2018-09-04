@@ -2,6 +2,7 @@ import argparse
 from statistics import stats
 from data_gen import user_generator, user_restaurant_likes_generator, user_product_likes_generator, user_locations_generator
 from knn_recommender.predict import predict
+from sentiment.predict import predict as predict_sentiment
 
 def main():
     parser = argparse.ArgumentParser(description='A driver program for misc foodpool script.')
@@ -18,11 +19,14 @@ def main():
     parser.add_argument('-ul', '--user-locations', type=int , help="[N] [this options is used with -g]")
     parser.add_argument('-pknn', '--predict-knn', type=int , help="[id]")
     parser.add_argument('-n', '--predict-knn-n', type=int , help="[id]")
+    parser.add_argument('-ps', '--predict-sentiment', type=str , help="[string]")
 
     args = parser.parse_args()
 
     if args.stats:
         stats.stats()
+    elif args.predict_sentiment:
+        predict_sentiment(args.predict_sentiment)
     elif args.predict_knn:
         print('predicting nearest match using knn ...')
         if args.predict_knn_n:

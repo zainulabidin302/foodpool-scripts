@@ -10,8 +10,8 @@ var MySQLStore = require('connect-mysql')(session);
 var options = {
   config: {
     user: 'root', 
-    password: '000000', 
-    database: 'foodpool' 
+    password: '', 
+    database: 'fp_new' 
   }
 };
 
